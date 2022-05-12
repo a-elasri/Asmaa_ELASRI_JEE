@@ -1,4 +1,4 @@
-package ma.enset.web;
+    package ma.enset.web;
 
 import lombok.AllArgsConstructor;
 import ma.enset.entities.Etudiant;
@@ -21,7 +21,8 @@ import java.util.List;
 public class EtudiantController {
     private EtudiantRepository etudiantRepository;
     @GetMapping(path = "/user/index")
-    public String etudaints(Model model,@RequestParam(name = "page",defaultValue = "0") int page,
+    public String etudaints(Model model,
+                            @RequestParam(name = "page",defaultValue = "0") int page,
                             @RequestParam(name = "size",defaultValue = "5") int size,
                             @RequestParam(name = "keyword",defaultValue = "") String keyword){
         Page<Etudiant> pageEtudiant=etudiantRepository.findByNomContains(keyword, PageRequest.of(page,size));
@@ -41,6 +42,7 @@ public class EtudiantController {
     public String home(){
         return  "home";
     }
+
     @GetMapping("/user/etudiants")
     @ResponseBody
     public List<Etudiant> listEtudiants(){
@@ -48,7 +50,7 @@ public class EtudiantController {
     }
 
     @GetMapping("/admin/formEtudiants")
-    public String formPatient(Model model){
+    public String formEtudiant(Model model){
         model.addAttribute("etudiant",new Etudiant());
         return "formEtudiants";
     }
@@ -61,7 +63,7 @@ public class EtudiantController {
         return "redirect:/user/index?page="+page+"&keyword"+keyword;
     }
     //1- on ajoute dependance
-    //2- On ajoute annotationt dans class patient.java
+    //2- On ajoute annotation dans class patient.java
     //3- on ajoute ici annotation valid
     //4-on ajoute th dans fichier html
     @GetMapping("/admin/editEtudiant")
@@ -72,5 +74,9 @@ public class EtudiantController {
         model.addAttribute("page",page);
         model.addAttribute("keyword",keyword);
         return "editEtudiant";
+    }
+    @GetMapping("/login")
+    public String login(){
+        return  "login";
     }
 }

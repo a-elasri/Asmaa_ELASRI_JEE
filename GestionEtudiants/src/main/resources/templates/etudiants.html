@@ -1,26 +1,49 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="template1">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New Etudiant</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" th:href="@{/css/etudiants.css}">
     <link rel="stylesheet" href="webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 </head>
 <body>
+<!-- partial:index.partial.html -->
 <div layout:fragment="content1">
 
-    <div class="container mt-2">
-        <div class="card-header">Liste des etudiants</div>
-        <div class="card-body">
+    <div class="container">
+<!--        <form method="get" th:action="@{/user/index}">-->
+<!--            <label>key word</label>-->
+<!--            <input type="text" name="keyword" th:value="${keyword}">-->
+<!--            <button type="submit" class="btn btn-primary">Chercher</button>-->
+<!--        </form>-->
+
             <form method="get" th:action="@{/user/index}">
-                <label>key word</label>
-                <input type="text" name="keyword" th:value="${keyword}">
-                <button type="submit" class="btn btn-primary">Chercher</button>
+                <div class="input-group rounded" style="margin-top: 50px">
+                    <input type="search" class="form-control rounded" placeholder="Chercher..." aria-label="Search" aria-describedby="search-addon" name="keyword" th:value="${keyword}"/>
+                    <button type="submit" class="btn bi-search"></button>
+                </div>
+
             </form>
-            <table class="table">
+
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Liste des etudiants</b></h2>
+                    </div>
+                    <div class="col-sm-6" sec:authorize="hasAuthority('ADMIN')">
+                        <a th:href="@{/admin/formEtudiants}" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Etudiant</span></a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
                 <thead>
                 <tr>
                     <th>ID</th> <th>Nom</th>
@@ -31,34 +54,41 @@
                 </thead>
                 <tbody>
                 <tr th:each="p:${listEtudiants}">
-                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.id}" ></td>
                     <td th:text="${p.nom}"></td>
                     <td th:text="${p.prenom}"></td>
                     <td th:text="${p.email}"></td>
                     <td th:text="${p.dateNaissance}"></td>
                     <td th:text="${p.genre}"></td>
                     <td th:text="${p.regle}"></td>
-                    <td sec:authorize="hasAuthority('ADMIN')">
-                        <a onclick="return confirm('êtes vous sûr ?')" class="btn btn-danger" th:href="@{/admin/delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
-                            Delete</a>
-                    </td>
-                    <td sec:authorize="hasAuthority('ADMIN')">
-                        <a  class="btn btn-success" th:href="@{/admin/editEtudiant(id=${p.id},keyword=${keyword}, page=${currentPage})}">
-                            Edit</a>
+                    <td sec:authorize="hasAuthority('ADMIN')" >
+                        <a th:href="@{/admin/editEtudiant(id=${p.id},keyword=${keyword}, page=${currentPage})}" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        <a onclick="return confirm('êtes vous sûr ?')" th:href="@{/admin/delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
+
                 </tbody>
             </table>
-            <ul class="nav nav-pills">
-                <li th:each="page,status:${pages}">
-                    <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
-                       th:text="${status.index}"
+            <div class="clearfix">
+<!--                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>-->
+                <ul class="pagination">
+                    <li class="page-item disabled"><a th:href="@{/user/index(page=${currentPage+(-1)}, keyword=${keyword})}">Previous</a></li>
 
-                       th:href="@{/user/index(page=${status.index}, keyword=${keyword})}"> </a>
-                </li>
-            </ul>
+                    <li th:each="page,status:${pages}">
+                        <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+                           th:text="${status.index}"
+
+                           th:href="@{/user/index(page=${status.index}, keyword=${keyword})}"> </a>
+                    </li>
+                    <li class="page-item"><a th:href="@{/user/index(page=${currentPage+1}, keyword=${keyword})}" class="page-link">Next</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
+<!-- partial -->
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
 </body>
 </html>

@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #0544b5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+            to right,
+            #6fb1fc,
+            #0544b5,
+            #000047
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+            to right,
+            #25a7fa,
+            #0544b5,
+            #000047
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.box {
+    width: 120%;
+    height: 80%;
+    background-color: #6fb1fc;
+    text-align: center;
+    border-radius: 10px;
+    -webkit-box-shadow: -5px -1px 36px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -5px -1px 36px -3px rgba(0, 0, 0, 0.75);
+    box-shadow: -5px -1px 36px -3px rgba(0, 0, 0, 0.75);
+}
+
+.box .large-number,
+.box .center-number {
+    font-size: 250px;
+    color: #ffffff;
+    font-weight: 800;
+    margin: 0;
+}
+
+.box .center-number {
+    -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.box span {
+    font-size: 30px;
+}
+
+.box p {
+    margin-bottom: 70px;
+}
+
+.box .btn-home {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #0544b5;
+    padding: 10px 20px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    border-bottom: 4px solid #ffffff;
+}
+
+.box .btn-home:hover {
+    color: #6fb1fc;
+}

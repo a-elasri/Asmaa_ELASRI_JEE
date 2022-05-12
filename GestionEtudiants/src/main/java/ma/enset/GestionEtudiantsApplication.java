@@ -1,6 +1,5 @@
 package ma.enset;
 
-
 import ma.enset.entities.Etudiant;
 import ma.enset.entities.Genre;
 import ma.enset.repositories.EtudiantRepository;
@@ -25,7 +24,7 @@ public class GestionEtudiantsApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner commandLineRunner(EtudiantRepository etudiantRepository){
         return args ->{
             etudiantRepository.save(
@@ -43,18 +42,18 @@ public class GestionEtudiantsApplication {
     }
 
 //    @Bean
-//    CommandLineRunner saveUsers(SecurityService securityService){
-//        return args -> {
-//            securityService.saveNewUser("asmaa","1234","1234");
-//            securityService.saveNewUser("khadija","1234","1234");
-//
-//
-//            securityService.saveNewRole("USER","");
-//            securityService.saveNewRole("ADMIN","");
-//
-//            securityService.addRoleToUser("asmaa","USER");
-//            securityService.addRoleToUser("asmaa","ADMIN");
-//            securityService.addRoleToUser("khadija","USER");
-//        };
-//    }
+    CommandLineRunner saveUsers(SecurityService securityService){
+        return args -> {
+            securityService.saveNewUser("majda","1234","1234");
+            securityService.saveNewUser("hind","1234","1234");
+
+
+            securityService.saveNewRole("USER","");
+            securityService.saveNewRole("ADMIN","");
+
+            securityService.addRoleToUser("majda","USER");
+          //  securityService.addRoleToUser("asmaa","ADMIN");
+            securityService.addRoleToUser("hind","USER");
+        };
+    }
 }

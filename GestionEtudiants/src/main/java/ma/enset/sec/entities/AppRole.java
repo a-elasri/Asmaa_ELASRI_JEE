@@ -8,8 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
-@Data
-@NoArgsConstructor
+@Data @NoArgsConstructor
 public class AppRole {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;

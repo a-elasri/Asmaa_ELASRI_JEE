@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.sql.DataSource;
 
 @Configuration
-//va etre instancié en premier
+//les classe qui vont instancier en 1er lieu
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -24,16 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
+ /*
+         //Pour les Password soit {noop} pour dire no pass encoder pour ne pa le hache
+        //au bien Password en coder
 
-        /*
         String encodedPWD=passwordEncoder.encode("1234");
         System.out.println(encodedPWD);
         auth.inMemoryAuthentication().withUser("user1").password(encodedPWD).roles("USER");
         auth.inMemoryAuthentication().withUser("user2").password(passwordEncoder.encode("1111")).roles("USER");
         auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("2345")).roles("USER","ADMIN");
         //stratégy pour les utilisateurs puisse connecter on défini les utilisateurs toléré à accéder
-
 */
+
         //On a creé 3 table dans phpmyadmin: -user -role et userRole
         //On va récupérer les donnée qu on a saisi manuellement pour comparer username et password saisi par utilisateur est ce qu'il sont juste ou pas
         //on fait as pour indiquer que c'est le username car il reconnait sous le nom de pricipal de meme pour password qui le cinnait en tant que credentials
@@ -52,12 +54,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-         http.formLogin();
+        // http.formLogin();
+        http.formLogin().loginPage("/login").permitAll(); // default login page
+        http.csrf().disable();
          http.authorizeRequests().antMatchers("/").permitAll();
          //On a changé de hasrole a hasauthority car une authotrité peut avoir plusieurs roles
          http.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN");
         http.authorizeRequests().antMatchers("/user/**").hasAuthority("USER");
         http.authorizeRequests().antMatchers("/webjars/**").permitAll();
+        http.authorizeRequests().antMatchers("/css/**").permitAll();
+        http.authorizeRequests().antMatchers("/js/**").permitAll();
+
         http.authorizeRequests().anyRequest().authenticated();
         //toutes les requetes http necessite une athentification
         http.exceptionHandling().accessDeniedPage("/403");

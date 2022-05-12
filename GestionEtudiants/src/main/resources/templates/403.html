@@ -3,16 +3,23 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="template1">
+      >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Page</title>
+    <link rel="stylesheet" th:href="@{/css/403.css}">
+
 </head>
 <body>
 <div layout:fragment="content1">
-    <div class="container">
-  <h2 class="text-danger">Vous n'êtes pas autorisé à accéder à cette ressource</h2>
-
+    <div class="box">
+        <h1 class="large-number">
+            4<span class="center-number">0</span>3
+        </h1>
+        <span><b>Ooopps</b></span>
+        <p><b>Vous n'êtes pas autorisé à accéder à cette ressource</b></p>
+        <a  th:href="@{/user/index}" class="btn-home">Homepage</a>
     </div>
 </div>
 </body>
