@@ -10,4 +10,5 @@ public class SecurityController {
     public String notAuthorized(){
         return "403";
     }
+
 }
